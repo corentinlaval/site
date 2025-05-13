@@ -3,16 +3,16 @@ import { CvpageComponent } from './cvpage/cvpage.component';
 
 export const routes: Routes = [
   {
-    path: 'cv',
+    path: 'CorentinLaval',
     component: CvpageComponent
   },
   {
     path: '',
-    redirectTo: '/cv',
+    redirectTo: '/CorentinLaval',
     pathMatch: 'full'
   },
   {
     path: '**',
-    redirectTo: '/cv'
+    redirectTo: '/CorentinLaval'
   }
 ];
