@@ -5,58 +5,44 @@ on:
     branches:
       - main
 
+# Toutes les commandes `run:` s'exécuteront dans le dossier `cv`
+defaults:
+  run:
+    working-directory: cv
+
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout du dépôt
+      # 1. Récupérer le code
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2. Setup Node.js
+      # 2. Configurer Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '16'
 
-      # 3. Mise en cache du registre npm pour accélérer
+      # 3. Mettre en cache le registre npm
       - name: Cache npm modules
         uses: actions/cache@v3
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node-${{ hashFiles('cv/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
 
-      # 4. Debug : lister tous les fichiers pour vérifier le lockfile
-      - name: Debug workspace
-        run: |
-          echo "=== Current directory ==="
-          pwd
-          echo ""
-          echo "=== Listing all files ==="
-          ls -R .
-
-      # 5. Debug : version de Node/NPM
-      - name: Debug Node & npm versions
-        run: |
-          echo "Node version:" && node -v
-          echo "npm version:" && npm -v
-
-      # 6. Install dependencies (avec fallback)
+      # 4. Installer les dépendances
       - name: Install dependencies
-        run: |
-          # Essai reproductible, tout échoue si lockfile manquant ou désynchro :
-          npm ci --legacy-peer-deps || \
-          # Sinon on retombe sur npm install pour voir si ça passe
-          npm install
+        run: npm ci
 
-      # 7. Build de l’application Angular
+      # 5. Compiler l’application Angular
       - name: Build Angular app
         run: npm run build -- --configuration production
 
-      # 8. Déploiement sur Firebase Hosting
+      # 6. Déployer sur Firebase Hosting
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
