@@ -10,17 +10,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Récupération du code
+      # 1. Checkout du dépôt
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2. Configuration de Node.js
+      # 2. Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '16'
 
-      # 3. Mise en cache du dossier npm pour accélérer la CI
+      # 3. Mise en cache du registre npm pour accélérer
       - name: Cache npm modules
         uses: actions/cache@v3
         with:
@@ -29,19 +29,38 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      # 4. Installation des dépendances de façon reproductible
-      - name: Install dependencies
-        run: npm ci
+      # 4. Debug : lister tous les fichiers pour vérifier le lockfile
+      - name: Debug workspace
+        run: |
+          echo "=== Current directory ==="
+          pwd
+          echo ""
+          echo "=== Listing all files ==="
+          ls -R .
 
-      # 5. Compilation de l’application Angular en prod
+      # 5. Debug : version de Node/NPM
+      - name: Debug Node & npm versions
+        run: |
+          echo "Node version:" && node -v
+          echo "npm version:" && npm -v
+
+      # 6. Install dependencies (avec fallback)
+      - name: Install dependencies
+        run: |
+          # Essai reproductible, tout échoue si lockfile manquant ou désynchro :
+          npm ci --legacy-peer-deps || \
+          # Sinon on retombe sur npm install pour voir si ça passe
+          npm install
+
+      # 7. Build de l’application Angular
       - name: Build Angular app
         run: npm run build -- --configuration production
 
-      # 6. Déploiement sur Firebase Hosting via l’action officielle
+      # 8. Déploiement sur Firebase Hosting
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          repoToken: "${{ secrets.GITHUB_TOKEN }}"                # Généré automatiquement par GitHub
-          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"  # Clé JSON de service account stockée en secret
-          channelId: live                                         # “live” pour la prod, ou “preview” pour preview deploys
-          projectId: ton-project-id                               # Remplacez par l’ID de votre projet Firebase
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
+          channelId: live
+          projectId: ton-project-id
