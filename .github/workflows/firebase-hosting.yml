@@ -5,7 +5,7 @@ on:
     branches:
       - main
 
-# Toutes les commandes `run:` s'exécuteront dans le dossier `cv`
+# Toutes les commandes run: s'exécutent dans le dossier cv
 defaults:
   run:
     working-directory: cv
@@ -19,11 +19,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2. Configurer Node.js
+      # 2. Configurer Node.js en version 18.19.0
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '18.19.0'
 
       # 3. Mettre en cache le registre npm
       - name: Cache npm modules
