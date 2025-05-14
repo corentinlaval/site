@@ -13,22 +13,23 @@ export class CvpageComponent {
   hover = false;
 
   downloadVcard() {
-    // Préfixe BOM pour que Windows reconnaisse l'UTF-8
-    const BOM = '\uFEFF';
-
-    const vcard = [
+    // Construction en vCard 2.1, accents en quoted-printable
+    const vcardLines = [
       'BEGIN:VCARD',
-      'VERSION:3.0',
+      'VERSION:2.1',
       'N:Laval;Corentin;;;',
-      'FN;CHARSET=UTF-8:Corentin Laval',
-      'TITLE;CHARSET=UTF-8:Ingénieur Télécom – Futur Doctorant',
-      'TEL;TYPE=CELL:+33-6-24-19-44-59',
-      'EMAIL;TYPE=WORK:corentin@lavalcorentin.com',
+      'FN:Corentin Laval',
+      'TITLE;CHARSET=ISO-8859-1;ENCODING=QUOTED-PRINTABLE:Ing=E9nieur T=E9l=E9com - Futur Doctorant',
+      'TEL;CELL:+33-6-24-19-44-59',
+      'EMAIL;PREF:corentin@lavalcorentin.com',
       'END:VCARD'
-    ].join('\r\n');
+    ];
 
-    // On inclut le BOM dans le Blob et on précise le charset dans le type MIME
-    const blob = new Blob([BOM + vcard], { type: 'text/vcard;charset=utf-8' });
+    // Blob en ISO-8859-1 pour que Windows Contacts l’accepte
+    const blob = new Blob(
+      [vcardLines.join('\r\n')],
+      { type: 'text/x-vcard;charset=ISO-8859-1' }
+    );
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
