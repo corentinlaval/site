@@ -9,24 +9,20 @@
 <body>
 <main class="cv">
   <!-- En-tête -->
-  <div class="photo-container"
-       (mouseenter)="hover = true"
-       (mouseleave)="hover = false">
-    <img
-      src="assets/images/CL.JPG"
-      alt="Photo de Corentin Laval"
-      class="cv-photo"
-    />
-    <button
-      *ngIf="hover"
-      class="download-btn"
-      (click)="downloadVcard()">
-      Ajouter à mes contacts
-    </button>
-  </div>
+  <section class="cv-header">
+    <!-- Photo de profil -->
+    <div class="photo-container">
+      <img
+        src="assets/images/CL.JPG"
+        alt="Photo de Corentin Laval"
+        class="cv-photo"
+      />
+      <button class="download-btn" (click)="downloadVcard()">Ajouter à mes contacts</button>
+    </div>
+  </section>
   <header class="cv-header">
     <h1 class="cv-name">Corentin Laval</h1>
-    <p class="cv-title">Ing&#233;nieur T&#233;l&#233;com & Future Doctorant</p>
+    <p class="cv-title">Ingénieur Télécom & Future Doctorant</p>
     <p class="cv-contact">
       <a href="mailto:corentin@lavalcorentin.com">corentin&#64;lavalcorentin.com</a> ·
       <a href="tel:+33624194459">+33 6 24 19 44 59</a> ·
@@ -52,6 +48,7 @@
       <li>Angular & TypeScript, Node.js</li>
       <li>Blazor, C# & Requêtes SQL</li>
       <li>LLM & Intelligence Artificielle</li>
+      <li>Administration réseau & cybersécurité</li>
       <li>HTML5, CSS3 & Responsive Design</li>
       <li>Git, CI/CD & Tests unitaires</li>
     </ul>
@@ -75,31 +72,33 @@
       </p>
     </article>
     <article class="cv-item">
-      <h3>Stage Front-end – Agence Web</h3>
-      <time datetime="2022-06">Juin 2022 – Décembre 2022</time>
-      <p>
-        Participation à la refonte d’un site e-commerce en Angular, optimisation des performances et mise en place de tests unitaires.
-      </p>
+      <h3>Projets scolaires & personnels</h3>
+      <ul>
+        <li>Site de shopping en Angular : application e-commerce avec gestion de panier, paiement simulé et intégration backend.</li>
+        <li>Simulation de match : plateforme de saisie et suivi de scores en temps réel, manipulation d’API sportives et gestion de serveur.</li>
+        <li>Projets en groupe : conception et déploiement d’API REST, gestion de bases de données et serveurs, collaboration via Git et CI/CD.</li>
+        <li>Configuration d'un réseau d'entreprise : mise en place DNS, firewall, VLAN, routage et gestion des switches, préparation d'environnements de production.</li>
+      </ul>
     </article>
     <article class="cv-item">
       <h3>Stage Développeur – Pôle DSI, Université Jean Monnet</h3>
-      <time datetime="2021-06">Juin 2021 – Juillet 2021 (4 semaines)</time>
+      <time datetime="2021-06">Juin – Juillet 2021 (4 semaines)</time>
       <p>
-        Rafraîchissement et amélioration d’un code de gestion de comptes et profils utilisateurs des employés pour retracer les parcours et historiques, en environnements préproduction et production.
+        Rafraîchissement et amélioration d’un code de gestion de comptes et profils utilisateurs des employés ; traçabilité des parcours en environnements préproduction et production.
       </p>
     </article>
     <article class="cv-item">
       <h3>Stage Développeur .NET – QDConsulting</h3>
-      <time datetime="2019-05">Mai 2019 – Juin 2019 (4 semaines)</time>
+      <time datetime="2019-05">Mai – Juin 2019 (4 semaines)</time>
       <p>
-        Prise en main du framework Blazor et développement d’un système de contrôle CRM offrant une visualisation graphique des données : appels API, gestion de base de données, développement Blazor en C# et requêtes SQL.
+        Prise en main du framework Blazor et développement d’un système de contrôle CRM offrant une visualisation graphique des données : appels API, gestion de base de données, C# et SQL.
       </p>
     </article>
     <article class="cv-item">
       <h3>Stage Technicien Supérieur – ACEA Automatisme</h3>
-      <time datetime="2018-04">Avril 2018 – Juin 2018 (10 semaines)</time>
+      <time datetime="2018-04">Avril – Juin 2018 (10 semaines)</time>
       <p>
-        Réalisation et amélioration de schémas électriques industriels ; développement d'IHM pour solution de contrôle de systèmes motorisés.
+        Réalisation et amélioration de schémas électriques industriels ; développement d’IHM pour le contrôle de systèmes motorisés.
       </p>
     </article>
   </section>
