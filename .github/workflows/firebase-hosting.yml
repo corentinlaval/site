@@ -48,6 +48,6 @@ jobs:
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
-          projectId: ton-project-id
+          projectId: cv-corentinlaval   # <-- Ton ID de projet exact
           channelId: live
           entryPoint: cv
