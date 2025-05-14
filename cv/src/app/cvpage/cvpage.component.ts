@@ -18,7 +18,7 @@ export class CvpageComponent {
       'VERSION:3.0',
       'N:Laval;Corentin;;;',
       'FN:Corentin Laval',
-      'TITLE:Ingénieur Télécom & Future Doctorant',
+      'TITLE:Ingénieur Télécom & Futur Doctorant',
       'TEL;TYPE=CELL:+33-6-24-19-44-59',
       'EMAIL;TYPE=WORK:corentin@lavalcorentin.com',
       'END:VCARD'
