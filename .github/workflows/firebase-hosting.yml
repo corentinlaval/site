@@ -5,6 +5,7 @@ on:
     branches:
       - main
 
+# Toutes les commandes run: s'exécutent dans le dossier cv
 defaults:
   run:
     working-directory: cv
@@ -14,14 +15,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      # 1. Checkout du dépôt
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
+      # 2. Setup Node.js en version 20.x
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18.19.0'
+          node-version: '20.x'
 
-      - name: Cache npm
+      # 3. Mettre en cache le registre npm
+      - name: Cache npm modules
         uses: actions/cache@v3
         with:
           path: ~/.npm
@@ -29,12 +34,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
+      # 4. Installer les dépendances
       - name: Install dependencies
         run: npm ci
 
+      # 5. Compiler l’application Angular
       - name: Build Angular app
         run: npm run build -- --configuration production
 
+      # 6. Déployer sur Firebase Hosting
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
@@ -42,4 +50,4 @@ jobs:
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
           projectId: ton-project-id
           channelId: live
-          entryPoint: cv       # <--- indique que firebase.json est dans ./cv
+          entryPoint: cv
