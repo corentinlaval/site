@@ -9,20 +9,24 @@
 <body>
 <main class="cv">
   <!-- En-tête -->
-  <section class="cv-header">
-    <!-- Photo de profil -->
+  <div class="photo-container"
+       (mouseenter)="hover = true"
+       (mouseleave)="hover = false">
     <img
       src="assets/images/CL.JPG"
       alt="Photo de Corentin Laval"
       class="cv-photo"
     />
-    <h1 class="cv-name">Corentin Laval</h1>
-    <p class="cv-title">Développeur Web Fullstack</p>
-    <!-- … -->
-  </section>
+    <button
+      *ngIf="hover"
+      class="download-btn"
+      (click)="downloadVcard()">
+      Ajouter à mes contacts
+    </button>
+  </div>
   <header class="cv-header">
     <h1 class="cv-name">Corentin Laval</h1>
-    <p class="cv-title">Développeur Web Fullstack</p>
+    <p class="cv-title">Ingénieur Télécom & Future Doctorant</p>
     <p class="cv-contact">
       <a href="mailto:corentin@lavalcorentin.com">corentin&#64;lavalcorentin.com</a> ·
       <a href="tel:+33624194459">+33 6 24 19 44 59</a> ·
@@ -34,10 +38,7 @@
   <section id="about" class="cv-section">
     <h2>À propos</h2>
     <p>
-      Passionné par le web depuis toujours, j'aime créer des applications
-      interactives et performantes. J'ai travaillé sur divers projets en
-      Angular, Node.js et Firebase, et je cherche toujours à apprendre de
-      nouvelles technologies.
+      Passionné par l'électronique, l'informatique industrielle et le développement web, je suis ingénieur Télécom de formation et futur doctorant au Laboratoire Hubert Curien. Actuellement en stage de recherche, j'explore l'utilisation des LLM dans le domaine médical.
     </p>
   </section>
 
@@ -45,12 +46,14 @@
   <section id="skills" class="cv-section">
     <h2>Compétences</h2>
     <ul class="cv-skills-list">
-      <li>Angular & TypeScript</li>
-      <li>HTML5 & CSS3</li>
-      <li>JavaScript (ES6+), Node.js</li>
-      <li>Firebase (Hosting, Firestore)</li>
-      <li>Git, GitHub & CI/CD</li>
-      <li>Responsive Design & Accessibilité</li>
+      <li>Electronique numérique & analogique</li>
+      <li>Génie Électrique et Informatique Industrielle (GEII)</li>
+      <li>Programmation C, Python & MATLAB</li>
+      <li>Angular & TypeScript, Node.js</li>
+      <li>Blazor, C# & Requêtes SQL</li>
+      <li>LLM & Intelligence Artificielle</li>
+      <li>HTML5, CSS3 & Responsive Design</li>
+      <li>Git, CI/CD & Tests unitaires</li>
     </ul>
   </section>
 
@@ -58,19 +61,45 @@
   <section id="experience" class="cv-section">
     <h2>Expérience</h2>
     <article class="cv-item">
+      <h3>Stage de Recherche – Laboratoire Hubert Curien</h3>
+      <time datetime="2024-12">Décembre 2024 – Aujourd’hui (25 semaines)</time>
+      <p>
+        Utilisation de grands modèles de langage (LLM) pour des applications en médecine, incluant la collecte de jeux de données, le fine-tuning de modèles et l’évaluation de performances.
+      </p>
+    </article>
+    <article class="cv-item">
       <h3>Développeur Web – Freelance</h3>
       <time datetime="2023-01">Janvier 2023 – Aujourd’hui</time>
       <p>
-        Conception et développement de sites et applications web pour des
-        clients variés : site vitrine, dashboard admin, PWA, intégration CI/CD.
+        Conception et développement de sites et applications web pour des clients variés : site vitrine, dashboard admin, PWA, intégration CI/CD.
       </p>
     </article>
     <article class="cv-item">
       <h3>Stage Front-end – Agence Web</h3>
       <time datetime="2022-06">Juin 2022 – Décembre 2022</time>
       <p>
-        Participation à la refonte d’un site e-commerce en Angular, optimisation
-        des performances et mise en place de tests unitaires.
+        Participation à la refonte d’un site e-commerce en Angular, optimisation des performances et mise en place de tests unitaires.
+      </p>
+    </article>
+    <article class="cv-item">
+      <h3>Stage Développeur – Pôle DSI, Université Jean Monnet</h3>
+      <time datetime="2021-06">Juin 2021 – Juillet 2021 (4 semaines)</time>
+      <p>
+        Rafraîchissement et amélioration d’un code de gestion de comptes et profils utilisateurs des employés pour retracer les parcours et historiques, en environnements préproduction et production.
+      </p>
+    </article>
+    <article class="cv-item">
+      <h3>Stage Développeur .NET – QDConsulting</h3>
+      <time datetime="2019-05">Mai 2019 – Juin 2019 (4 semaines)</time>
+      <p>
+        Prise en main du framework Blazor et développement d’un système de contrôle CRM offrant une visualisation graphique des données : appels API, gestion de base de données, développement Blazor en C# et requêtes SQL.
+      </p>
+    </article>
+    <article class="cv-item">
+      <h3>Stage Technicien Supérieur – ACEA Automatisme</h3>
+      <time datetime="2018-04">Avril 2018 – Juin 2018 (10 semaines)</time>
+      <p>
+        Réalisation et amélioration de schémas électriques industriels ; développement d'IHM pour solution de contrôle de systèmes motorisés.
       </p>
     </article>
   </section>
@@ -79,9 +108,24 @@
   <section id="education" class="cv-section">
     <h2>Formation</h2>
     <article class="cv-item">
-      <h3>Licence Informatique – Université XYZ</h3>
-      <time datetime="2018-09">Septembre 2018 – Juin 2021</time>
-      <p>Parcours orienté développement web et bases de données.</p>
+      <h3>Baccalauréat général</h3>
+      <time datetime="2013-09">Septembre 2013 – Juin 2016</time>
+      <p>Lycée Claude Lebois, Saint-Chamond</p>
+    </article>
+    <article class="cv-item">
+      <h3>DUT Génie Électrique et Informatique Industrielle (GEII)</h3>
+      <time datetime="2016-09">Septembre 2016 – Juin 2018</time>
+      <p>IUT Saint-Étienne, site de La Métare</p>
+    </article>
+    <article class="cv-item">
+      <h3>Cycle Ingénieur – Télécom Saint-Étienne</h3>
+      <time datetime="2018-09">Septembre 2018 – Juin 2022</time>
+      <p>Parcours en 4 ans (année 1 redoublée)</p>
+    </article>
+    <article class="cv-item">
+      <h3>Doctorat (en préparation) – Laboratoire Hubert Curien</h3>
+      <time datetime="2025-09">À partir de septembre 2025</time>
+      <p>Sujet de thèse à définir</p>
     </article>
   </section>
 
@@ -105,7 +149,7 @@
     <h2>Contact</h2>
     <p>
       Je suis disponible par email à
-      <a href="mailto:corentin@example.com">corentin&#64;example.com</a>
+      <a href="mailto:corentin@lavalcorentin.com">corentin&#64;lavalcorentin.com</a>
       ou via mon profil GitHub
       <a href="https://github.com/corentinlaval" target="_blank" rel="noopener">corentinlaval</a>.
     </p>

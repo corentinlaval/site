@@ -28,6 +28,15 @@
   position: relative;
 }
 
+/* CONTENEUR DE LA PHOTO POUR GÉRER LE SURVOL ET LE CENTRER */
+.photo-container {
+  position: relative;
+  display: block;
+  margin: 0 auto;
+  width: fit-content;
+}
+
+/* TA PHOTO */
 .cv-photo {
   width: 150px;
   height: 150px;
@@ -38,75 +47,26 @@
   margin: 0 auto 1rem;
 }
 
-.cv-name {
-  font-size: 2.5rem;
-  margin: 0;
-  color: #2c3e50;
-}
-
-.cv-title {
-  font-size: 1.25rem;
-  margin: 0.25rem 0 0.75rem;
-  color: #34495e;
-}
-
-.cv-contact {
+/* BOUTON QUI APPARAÎT AU SURVOL */
+.download-btn {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.5em 1em;
+  background: rgba(0, 123, 255, 0.8);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
   font-size: 0.9rem;
-  margin-top: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.2s;
 }
 
-.cv-contact a {
-  margin: 0 0.5rem;
-}
-
-.cv-section {
-  margin-bottom: 2.25rem;
-}
-
-.cv-section h2 {
-  font-size: 1.75rem;
-  margin-bottom: 0.75rem;
-  color: #2c3e50;
-  border-bottom: 2px solid #2980b9;
-  padding-bottom: 0.25rem;
-}
-
-.cv-section p {
-  margin: 0.5rem 0;
-}
-
-.cv-skills-list,
-.cv-projects-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.cv-skills-list li,
-.cv-projects-list li {
-  margin: 0.5rem 0;
-}
-
-.cv-item {
-  margin-bottom: 1.5rem;
-}
-
-.cv-item h3,
-.cv-item h4 {
-  font-size: 1.2rem;
-  margin: 0;
-  color: #34495e;
-}
-
-.cv-item time {
-  display: block;
-  font-size: 0.85rem;
-  color: #777;
-  margin-bottom: 0.5rem;
-}
-
-.cv-item p {
-  margin: 0.25rem 0 0;
+/* AU SURVOL DE .photo-container, on fait apparaître le bouton */
+.photo-container:hover .download-btn {
+  opacity: 1;
 }
 
 @media (max-width: 600px) {
