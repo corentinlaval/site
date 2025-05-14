@@ -2,30 +2,46 @@ name: Deploy to Firebase Hosting
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      # 1. Récupération du code
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - name: Use Node.js
+      # 2. Configuration de Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '16'
 
+      # 3. Mise en cache du dossier npm pour accélérer la CI
+      - name: Cache npm modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      # 4. Installation des dépendances de façon reproductible
       - name: Install dependencies
         run: npm ci
 
+      # 5. Compilation de l’application Angular en prod
       - name: Build Angular app
         run: npm run build -- --configuration production
 
-      - name: Install Firebase CLI
-        run: npm install -g firebase-tools
-
-      - name: Deploy to Firebase
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-        run: firebase deploy --only hosting
+      # 6. Déploiement sur Firebase Hosting via l’action officielle
+      - name: Deploy to Firebase Hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"                # Généré automatiquement par GitHub
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"  # Clé JSON de service account stockée en secret
+          channelId: live                                         # “live” pour la prod, ou “preview” pour preview deploys
+          projectId: ton-project-id                               # Remplacez par l’ID de votre projet Firebase
