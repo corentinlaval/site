@@ -79,6 +79,11 @@
   height: 0;
 }
 
+/* Justify text in the About section */
+#about p {
+  text-align: justify;
+}
+
 /* Show button on hover */
 .photo-container:hover .download-btn {
   opacity: 1;
