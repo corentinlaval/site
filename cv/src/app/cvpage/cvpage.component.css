@@ -28,7 +28,7 @@
   position: relative;
 }
 
-/* Photo container for hover and centering */
+/* Photo container */
 .photo-container {
   position: relative;
   display: block;
@@ -36,18 +36,15 @@
   width: fit-content;
 }
 
-/* Profile photo */
 .cv-photo {
   width: 150px;
   height: 150px;
   object-fit: cover;
   border-radius: 50%;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  display: block;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   margin: 0 auto 1rem;
 }
 
-/* Download button */
 .download-btn {
   position: absolute;
   bottom: -20px;
@@ -65,30 +62,61 @@
   transition: opacity 0.2s;
 }
 
-/* Arrow pointing up above the button, positioned closer to the button */
 .download-btn::before {
   content: "";
   position: absolute;
-  top: -5px;        /* moved down to point closer to the photo */
+  top: -5px;
   left: 50%;
   transform: translateX(-50%);
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
   border-bottom: 6px solid rgba(128, 128, 128, 0.8);
-  width: 0;
-  height: 0;
 }
 
-/* Justify text in the About section */
-#about p {
-  text-align: justify;
-}
-
-/* Show button on hover */
 .photo-container:hover .download-btn {
   opacity: 1;
 }
 
+/* Section styling: minimal with accent border */
+.cv-section {
+  margin-bottom: 2rem;
+  padding-left: 1rem;
+  border-left: 4px solid #2980b9;
+}
+
+.cv-section h2 {
+  font-size: 1.75rem;
+  color: #2980b9;
+  margin-bottom: 0.5rem;
+  text-align: right;
+}
+
+/* Align school parcours text to the right */
+#education .cv-item,
+#education .cv-item h3,
+#education .cv-item time,
+#education .cv-item p {
+  text-align: right;
+}
+
+/* Justify About section text */
+#about p {
+  text-align: justify;
+}
+
+/* Justify About section text */
+#about p {
+  text-align: justify;
+}
+
+/* Align specific section titles to the right */
+#education h2,
+#internships h2,
+#student-jobs h2 {
+  text-align: left;
+}
+
+/* Responsive adjustments */
 @media (max-width: 600px) {
   .cv {
     padding: 1rem;
@@ -100,6 +128,6 @@
     font-size: 1rem;
   }
   .cv-section h2 {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
   }
 }

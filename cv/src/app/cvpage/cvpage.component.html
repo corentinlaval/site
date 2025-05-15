@@ -10,7 +10,6 @@
 <main class="cv">
   <!-- En-tête -->
   <section class="cv-header">
-    <!-- Photo de profil -->
     <div class="photo-container">
       <img src="assets/images/CL.JPG" alt="Photo de Corentin Laval" class="cv-photo" />
       <button class="download-btn" (click)="downloadVcard()">Ajouter à mes contacts</button>
@@ -34,73 +33,9 @@
     </p>
   </section>
 
-  <!-- Compétences -->
-  <section id="skills" class="cv-section">
-    <h2>Compétences</h2>
-    <ul class="cv-skills-list">
-      <li>Génie Électrique et Informatique Industrielle (GEII)</li>
-      <li>Programmation C, Python & MATLAB</li>
-      <li>Angular & TypeScript, Node.js</li>
-      <li>Blazor, C# & SQL</li>
-      <li>LLM & Intelligence Artificielle</li>
-      <li>Administration réseau & Cybersécurité</li>
-      <li>HTML5, CSS3 & Responsive Design</li>
-      <li>Git, CI/CD & Tests unitaires</li>
-    </ul>
-  </section>
-
-  <!-- Expérience professionnelle -->
-  <section id="experience" class="cv-section">
-    <h2>Expérience</h2>
-    <article class="cv-item">
-      <h3>Stage de Recherche – Laboratoire Hubert Curien</h3>
-      <time datetime="2024-12">Décembre 2024 – Aujourd’hui (25 semaines)</time>
-      <p>
-        Utilisation de grands modèles de langage (LLM) pour des applications en médecine, incluant la collecte de jeux de données, le fine-tuning de modèles et l’évaluation de performances.
-      </p>
-    </article>
-    <article class="cv-item">
-      <h3>Développeur Web – Freelance</h3>
-      <time datetime="2023-01">Janvier 2023 – Aujourd’hui</time>
-      <p>
-        Conception et développement de sites et applications web pour des clients variés : site vitrine, dashboard admin, PWA, intégration CI/CD.
-      </p>
-    </article>
-    <article class="cv-item">
-      <h3>Projets scolaires & personnels</h3>
-      <ul>
-        <li>Site de shopping en Angular : application e-commerce avec gestion de panier, paiement simulé et intégration backend.</li>
-        <li>Simulation de match : plateforme de saisie et suivi de scores en temps réel, manipulation d’API sportives et gestion de serveur.</li>
-        <li>Projets en groupe : conception et déploiement d’API REST, gestion de bases de données et serveurs, collaboration via Git et CI/CD.</li>
-        <li>Configuration d'un réseau d'entreprise : mise en place DNS, firewall, VLAN, routage et gestion des switches, préparation d'environnements de production.</li>
-      </ul>
-    </article>
-    <article class="cv-item">
-      <h3>Stage Développeur – Pôle DSI, Université Jean Monnet</h3>
-      <time datetime="2021-06">Juin – Juillet 2021 (4 semaines)</time>
-      <p>
-        Rafraîchissement et amélioration d’un code de gestion de comptes et profils utilisateurs des employés ; traçabilité des parcours en environnements préproduction et production.
-      </p>
-    </article>
-    <article class="cv-item">
-      <h3>Stage Développeur .NET – QDConsulting</h3>
-      <time datetime="2019-05">Mai – Juin 2019 (4 semaines)</time>
-      <p>
-        Prise en main du framework Blazor et développement d’un système de contrôle CRM offrant une visualisation graphique des données : appels API, gestion de base de données, C# et SQL.
-      </p>
-    </article>
-    <article class="cv-item">
-      <h3>Stage Technicien Supérieur – ACEA Automatisme</h3>
-      <time datetime="2018-04">Avril – Juin 2018 (10 semaines)</time>
-      <p>
-        Réalisation et amélioration de schémas électriques industriels ; développement d’IHM pour le contrôle de systèmes motorisés.
-      </p>
-    </article>
-  </section>
-
-  <!-- Formation -->
+  <!-- Parcours scolaire -->
   <section id="education" class="cv-section">
-    <h2>Formation</h2>
+    <h2>Parcours scolaire</h2>
     <article class="cv-item">
       <h3>Baccalauréat général</h3>
       <time datetime="2013-09">Septembre 2013 – Juin 2016</time>
@@ -116,34 +51,61 @@
       <time datetime="2018-09">Septembre 2018 – Juin 2022</time>
       <p>Parcours en 4 ans (année 1 redoublée)</p>
     </article>
+  </section>
+
+  <!-- Stages et expériences semi-professionnelles -->
+  <section id="internships" class="cv-section">
+    <h2>Stages et expériences semi-professionnelles</h2>
     <article class="cv-item">
-      <h3>Doctorat (en préparation) – Laboratoire Hubert Curien</h3>
-      <time datetime="2025-09">À partir de septembre 2025</time>
-      <p>Sujet de thèse à définir</p>
+      <h3>Stage Technicien Supérieur – ACEA Automatisme</h3>
+      <time datetime="2018-04">Avril – Juin 2018 (10 semaines)</time>
+      <p>Réalisation et amélioration de schémas électriques industriels ; développement d’IHM pour le contrôle de systèmes motorisés.</p>
+    </article>
+    <article class="cv-item">
+      <h3>Stage Développeur .NET – QDConsulting</h3>
+      <time datetime="2019-05">Mai – Juin 2019 (4 semaines)</time>
+      <p>Prise en main de Blazor et développement d’un CRM graphique : appels API, gestion de BDD, C# et SQL.</p>
+    </article>
+    <article class="cv-item">
+      <h3>Stage Développeur – Pôle DSI, Université Jean Monnet</h3>
+      <time datetime="2021-06">Juin – Juillet 2021 (4 semaines)</time>
+      <p>Amélioration d’un code de gestion de comptes et profils utilisateurs (préprod & prod) pour tracer parcours et historiques.</p>
+    </article>
+    <article class="cv-item">
+      <h3>Stage de Recherche – Laboratoire Hubert Curien</h3>
+      <time datetime="2024-12">Décembre 2024 – Aujourd’hui (25 semaines)</time>
+      <p>Utilisation de LLM pour applications médicales : collecte de données, fine‑tuning et évaluation de modèles.</p>
     </article>
   </section>
 
-  <!-- Projets -->
+  <!-- Jobs étudiants -->
+  <section id="student-jobs" class="cv-section">
+    <h2>Jobs étudiants</h2>
+    <article class="cv-item">
+      <h3>Formateur – McDonald’s Rive-de-Gier</h3>
+      <time datetime="2016-09">Septembre 2016 – Août 2018 (2 ans)</time>
+      <p>Formation et encadrement des nouveaux équipiers en salle et au drive.</p>
+    </article>
+    <article class="cv-item">
+      <h3>Manager – Ninkasi Saint-Étienne</h3>
+      <time datetime="2018-09">Septembre 2018 – Août 2020 (2 ans)</time>
+      <p>Gestion du personnel et des plannings, accueil clients et supervision des opérations quotidiennes.</p>
+    </article>
+  </section>
+
+  <!-- Projets personnels -->
   <section id="projects" class="cv-section">
     <h2>Projets personnels</h2>
     <ul class="cv-projects-list">
-      <li>
-        <h4>Portfolio Angular</h4>
-        <p>Mon site CV et portfolio développé en Angular et hébergé sur Firebase.</p>
-      </li>
-      <li>
-        <h4>To-Do List PWA</h4>
-        <p>Application de prise de notes hors-ligne avec service workers.</p>
-      </li>
+      <li><h4>Portfolio Angular</h4><p>Site CV et portfolio en Angular hébergé sur Firebase.</p></li>
+      <li><h4>To-Do List PWA</h4><p>Application de prise de notes hors-ligne avec service workers.</p></li>
     </ul>
   </section>
 
   <!-- Contact -->
   <section id="contact" class="cv-section">
     <h2>Contact</h2>
-    <p>
-      Je suis disponible par email à <a href="mailto:corentin@lavalcorentin.com">corentin&#64;lavalcorentin.com</a> ou via mon profil GitHub <a href="https://github.com/corentinlaval" target="_blank" rel="noopener">corentinlaval</a>.
-    </p>
+    <p>Disponible par email à <a href="mailto:corentin@lavalcorentin.com">corentin&#64;lavalcorentin.com</a> ou via GitHub : <a href="https://github.com/corentinlaval" target="_blank" rel="noopener">corentinlaval</a>.</p>
   </section>
 </main>
 </body>
