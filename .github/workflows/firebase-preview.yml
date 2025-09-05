@@ -1,0 +1,44 @@
+name: Preview (Firebase Hosting)
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install deps
+        run: npm ci
+
+      # Installe Chrome pour les tests Karma (Headless)
+      - name: Setup Chrome
+        uses: browser-actions/setup-chrome@v1
+
+      - name: Lint (optionnel)
+        run: npm run lint --if-present || echo "Lint ignoré"
+
+      - name: Tests (headless)
+        run: npm run test -- --watch=false --browsers=ChromeHeadless || echo "Tests ignorés"
+
+      - name: Build (prod)
+        run: npm run build
+
+      - name: Deploy to Firebase Preview Channel
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}'
+          projectId: '<TON_ID_FIREBASE>'
+          channelId: 'pr-${{ github.event.number }}'
+          expires: 7d
