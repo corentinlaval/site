@@ -1,0 +1,37 @@
+<div class="login">
+  <div class="login-header">
+    <div class="logo">CL</div>
+    <h1>Connexion</h1>
+    <p>Veuillez, vous connecter</p>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+    <div class="field">
+      <label for="username">Identifiant</label>
+      <input id="username" type="text" formControlName="username" placeholder="prenom.nom@example.com" />
+      <div class="error" *ngIf="username?.touched && username?.invalid">
+        Identifiant requis
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="password">Mot de passe</label>
+      <div class="password-wrap">
+        <input [type]="showPassword() ? 'text' : 'password'" id="password" formControlName="password" placeholder="••••••••" />
+        <button class="toggle" type="button" (click)="toggleShow()">
+          {{ showPassword() ? 'Masquer' : 'Voir' }}
+        </button>
+      </div>
+      <div class="error" *ngIf="password?.touched && password?.invalid">
+        Mot de passe requis
+      </div>
+    </div>
+
+    <button class="submit" type="submit" [disabled]="loading">
+      <span *ngIf="!loading">Se connecter</span>
+      <span *ngIf="loading" class="spinner"></span>
+    </button>
+
+    <p class="form-error" *ngIf="errorMsg">{{ errorMsg }}</p>
+  </form>
+</div>
