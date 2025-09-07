@@ -1,4 +1,3 @@
-<!-- side.component.html -->
 <header class="topbar">
   <div class="brand">
     <div class="logo" routerLink="/menu">CL</div>
@@ -8,5 +7,20 @@
         {{ name }} <span class="user-dot" title="connecté"></span>
       </p>
     </div>
+  </div>
+
+  <div class="actions">
+    <button *ngIf="showThemeToggle"
+            class="btn ghost"
+            (click)="themeToggle.emit()"
+            aria-label="Basculer le thème">
+      <span class="sun">☀️</span>
+      <span class="moon">🌙</span>
+    </button>
+
+    <!-- Déconnexion -->
+    <button class="btn danger" (click)="logout()" aria-label="Se déconnecter">
+      🔓
+    </button>
   </div>
 </header>
