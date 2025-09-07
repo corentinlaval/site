@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgIf } from '@angular/common';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-side',
   standalone: true,
-  imports: [NgIf],
+  imports: [NgIf, RouterLink],
   templateUrl: './side.component.html',
   styleUrls: ['./side.component.css'], // <- tableau, pas string
 })

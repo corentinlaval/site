@@ -1,8 +1,94 @@
-:host{ display:block; color:#e7ebff }
-.wrap{ padding:30px clamp(16px,5vw,40px) 80px; }
-h1{ margin:0 0 .2rem; font-size: clamp(1.2rem, 2.4vw, 1.8rem); }
-.sub{ color:#b8c0ffcc; margin:0 0 1rem; }
-.card{
-  border:1px solid #2b2e4a; border-radius:20px;
-  padding:16px; background: linear-gradient(180deg, #0e1125d0, #0e1125a8);
+:host{ display:block; color:var(--text); font-family: Arial, sans-serif;}
+
+.planner{
+  padding: 24px clamp(16px,5vw,48px);
+  display: grid;
+  gap: 18px;
 }
+
+.header{ display:flex; gap:18px; align-items:flex-start; flex-wrap:wrap; }
+
+.month-nav{
+  display:flex; align-items:center; gap:12px;
+  background: color-mix(in oklab, var(--surface) 85%, transparent);
+  border:1px solid var(--border);
+  padding:12px 16px; border-radius:14px;
+}
+.month-nav h2{ margin:0; font-weight:800; text-transform:capitalize; }
+.month-nav .ghost{
+  padding:6px 10px; border-radius:10px; border:1px solid var(--border);
+  background: color-mix(in oklab, var(--surface-2) 70%, transparent);
+  color:var(--text); cursor:pointer; transition:.2s;
+}
+.month-nav .ghost:hover{ box-shadow:0 0 0 6px var(--ring) inset; }
+
+.upcoming{
+  flex:1 1 280px;
+  background: linear-gradient(180deg, color-mix(in oklab, var(--surface) 85%, transparent), color-mix(in oklab, var(--surface-2) 65%, transparent));
+  border:1px solid var(--border);
+  border-radius:14px; padding:14px 16px;
+}
+.upcoming h3{ margin:0 0 8px; font-weight:800; }
+.upcoming ul{ margin:0; padding:0; list-style:none; display:grid; gap:8px; }
+.upcoming .tit{ font-weight:700; }
+.upcoming .sub{ color:var(--muted); font-size:.92rem; }
+.upcoming .empty{ color:var(--muted); }
+
+.grid{
+  display:grid; gap:18px;
+  grid-template-columns: minmax(280px, 380px) 1fr;
+}
+@media (max-width: 900px){ .grid{ grid-template-columns: 1fr; } }
+
+.card{
+  background: linear-gradient(180deg, color-mix(in oklab, var(--surface) 85%, transparent), color-mix(in oklab, var(--surface-2) 65%, transparent));
+  border:1px solid var(--border); border-radius:18px; padding:18px;
+  box-shadow: 0 10px 30px #00000022;
+}
+
+.frm{ display:grid; gap:12px; }
+.frm .row2{ display:grid; grid-template-columns: 1.2fr .8fr .8fr; gap:12px; }
+.frm label{ display:grid; gap:6px; }
+.frm input{
+  padding:10px 12px; border-radius:12px; border:1px solid var(--border);
+  background: color-mix(in oklab, var(--surface-2) 70%, transparent);
+  color:var(--text);
+}
+.actions{ display:flex; align-items:center; gap:10px; margin-top:6px; }
+.primary{
+  padding:10px 14px; border-radius:12px; border:0; color:#fff; cursor:pointer;
+  background: linear-gradient(135deg,#45e6b8 0%,#1ec6ff 60%,#5b8cff 100%);
+  box-shadow: 0 12px 28px #1ec6ff44;
+}
+.spinner{ width:18px; height:18px; border-radius:50%; border:3px solid #fff4; border-top-color:#fff; display:inline-block; animation:spin .8s linear infinite; }
+.error{ color:#ff7a85; font-weight:600; }
+
+.weekhead{
+  display:grid; grid-template-columns: repeat(7,1fr);
+  gap:6px; margin-bottom:8px; color:var(--muted); font-weight:700; text-align:center;
+}
+.monthgrid{ display:grid; grid-template-columns: repeat(7,1fr); gap:6px; }
+.cell{
+  position:relative; min-height:90px;
+  border:1px solid var(--border); border-radius:12px; padding:8px;
+  background: color-mix(in oklab, var(--surface) 60%, transparent);
+  overflow:hidden;
+}
+.cell.out{ opacity:.55; }
+.cell.today{ box-shadow:0 0 0 2px #5b8cff inset; }
+
+.daynum{ font-weight:800; font-size:.95rem; }
+.dots{ position:absolute; top:8px; right:8px; display:flex; gap:4px; }
+.dot{ font-size:.7rem; color:#8f73ff; }
+
+.events{ margin:6px 0 0; padding:0; list-style:none; display:grid; gap:4px; }
+.events li{
+  display:grid; grid-template-columns: 48px 1fr auto; gap:6px; align-items:center;
+  padding:6px 8px; border-radius:10px;
+  background: color-mix(in oklab, var(--surface-2) 70%, transparent);
+}
+.events .time{ font-weight:700; color:var(--muted); }
+.events .title{ font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.link.danger{ background:none; border:0; color:#ff8694; cursor:pointer; font-weight:900; }
+
+@keyframes spin{ to { transform: rotate(360deg); } }

@@ -1,10 +1,97 @@
-<div class="wrap">
-  <header>
-    <h1>Planning</h1>
-    <p class="sub">Ici tu pourras créer tes événements et voir ton emploi du temps.</p>
-  </header>
+<div class="planner">
+  <section class="header">
+    <div class="month-nav">
+      <button class="ghost" (click)="prevMonth()" aria-label="Mois précédent">←</button>
+      <h2>{{ monthLabel }}</h2>
+      <button class="ghost" (click)="nextMonth()" aria-label="Mois suivant">→</button>
+    </div>
 
-  <section class="card">
-    <p>🗓️ Bientôt : calendrier + liste d’événements synchronisés avec Firestore.</p>
+    <div class="upcoming">
+      <h3>À venir</h3>
+      <ul>
+        <li *ngFor="let e of (upcoming$ | async)">
+          <div class="tit">{{ e.title }}</div>
+          <div class="sub">
+            {{ e.start.toDate() | date:'EEE d MMM, HH:mm':'':'fr-FR' }}
+            – {{ e.end.toDate() | date:'HH:mm':'':'fr-FR' }}
+            <span *ngIf="e.location">· {{ e.location }}</span>
+          </div>
+        </li>
+        <li class="empty" *ngIf="((upcoming$ | async) || []).length === 0">Rien de prévu.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="card">
+      <h3>Ajouter un évènement</h3>
+      <form [formGroup]="form" (ngSubmit)="addEvent()" class="frm">
+        <label>
+          <span>Titre</span>
+          <input type="text" formControlName="title" placeholder="Réunion, départ, etc." />
+        </label>
+
+        <div class="row2">
+          <label>
+            <span>Date</span>
+            <input type="date" formControlName="date" />
+          </label>
+          <label>
+            <span>Début</span>
+            <input type="time" formControlName="start" />
+          </label>
+          <label>
+            <span>Fin</span>
+            <input type="time" formControlName="end" />
+          </label>
+        </div>
+
+        <label>
+          <span>Lieu</span>
+          <input type="text" formControlName="location" placeholder="(optionnel)" />
+        </label>
+
+        <label>
+          <span>Notes</span>
+          <input type="text" formControlName="notes" placeholder="(optionnel)" />
+        </label>
+
+        <div class="actions">
+          <button class="primary" type="submit" [disabled]="saving() || form.invalid">
+            <span *ngIf="!saving()">Ajouter</span>
+            <span *ngIf="saving()" class="spinner"></span>
+          </button>
+          <span class="error" *ngIf="errorMsg()">{{ errorMsg() }}</span>
+        </div>
+      </form>
+    </div>
+
+    <div class="card">
+      <h3>Calendrier</h3>
+
+      <div class="weekhead">
+        <div>Lun</div><div>Mar</div><div>Mer</div><div>Jeu</div><div>Ven</div><div>Sam</div><div>Dim</div>
+      </div>
+
+      <div class="monthgrid">
+        <div class="cell"
+             *ngFor="let d of (calendar$ | async)"
+             [class.out]="!d.inMonth"
+             [class.today]="(d.date | date:'yyyy-MM-dd') === (today | date:'yyyy-MM-dd')">
+          <div class="daynum">{{ d.date | date:'d' }}</div>
+          <div class="dots">
+            <span class="dot" *ngFor="let _ of d.events">●</span>
+          </div>
+          <ul class="events" *ngIf="d.events.length">
+            <li *ngFor="let e of d.events">
+              <span class="time">{{ e.start.toDate() | date:'HH:mm' }}</span>
+              <span class="title">{{ e.title }}</span>
+              <button class="link danger" (click)="delete(e.id)" title="Supprimer">✕</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
   </section>
 </div>

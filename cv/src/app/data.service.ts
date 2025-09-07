@@ -116,4 +116,49 @@ export class DataService {
       createdAt: serverTimestamp() as unknown as Timestamp
     });
   }
+
+  // --- LISTE / LECTURE EVENTS ---
+
+  listEvents$(): Observable<Array<EventItem & { id: string }>> {
+    return authState(this.auth).pipe(
+      filter((u): u is User => u !== null),
+      switchMap((u) => {
+        const qy = query(
+          this.eventsCol(),
+          where('uid', '==', u.uid),
+          orderBy('start', 'asc')
+        );
+        return collectionData<EventItem>(qy, { idField: 'id' });
+      }),
+      map(arr => arr as Array<EventItem & { id: string }>)
+    );
+  }
+
+  /** évènements entre deux bornes (inclus début, exclu fin) */
+  eventsBetween$(from: Date, to: Date): Observable<Array<EventItem & { id: string }>> {
+    // On filtre après coup côté client (simple et efficace pour commencer)
+    return this.listEvents$().pipe(
+      map(list =>
+        list.filter(e => {
+          const s = e.start.toDate();
+          return s >= from && s < to;
+        })
+      )
+    );
+  }
+
+  deleteEvent(id: string) {
+    return deleteDoc(doc(this.db, 'events', id));
+  }
+
+  updateEvent(
+    id: string,
+    patch: Partial<{ title: string; start: Date; end: Date; location: string; notes: string }>
+  ) {
+    const payload: any = { ...patch };
+    if (patch.start) payload.start = Timestamp.fromDate(patch.start);
+    if (patch.end)   payload.end   = Timestamp.fromDate(patch.end);
+    return updateDoc(doc(this.db, 'events', id), payload);
+  }
 }
+

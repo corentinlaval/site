@@ -1,23 +1,12 @@
 <!-- side.component.html -->
 <header class="topbar">
   <div class="brand">
-    <div class="logo">CL</div>
+    <div class="logo" routerLink="/menu">CL</div>
     <div class="title">
       <h1>{{ title }}</h1>
       <p class="muted" *ngIf="displayName as name">
         {{ name }} <span class="user-dot" title="connecté"></span>
       </p>
     </div>
-  </div>
-
-  <div class="actions">
-    <button *ngIf="showThemeToggle"
-            class="btn ghost"
-            (click)="themeToggle.emit()"
-            aria-label="Basculer le thème">
-      <span class="sun">☀️</span>
-      <span class="moon">🌙</span>
-    </button>
-    <ng-content></ng-content>
   </div>
 </header>

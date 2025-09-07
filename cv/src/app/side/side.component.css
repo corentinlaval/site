@@ -11,14 +11,27 @@
 
 .brand{ display:flex; align-items:center; gap:12px; }
 
-.logo{
-  width:38px; height:38px; border-radius:12px;
-  display:grid; place-items:center; font-weight:800; letter-spacing:.3px; color:#fff;
+.logo {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  letter-spacing: .3px;
+  color: #fff;
   background: linear-gradient(135deg,#6ea3ff,#8f73ff 55%,#ff64e6);
   box-shadow: 0 6px 18px #6ea3ff44;
   animation: float 6s ease-in-out infinite;
+
+  cursor: pointer;          /* 👈 change la forme de la souris */
+  transition: transform .2s ease, box-shadow .2s ease;
 }
 
+.logo:hover {
+  transform: scale(1.08);   /* petit zoom */
+  box-shadow: 0 8px 20px #6ea3ff66;
+}
 .title h1{
   margin:0; font-weight:800; font-size:1.05rem; letter-spacing:.2px;
 }
