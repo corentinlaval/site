@@ -1,0 +1,67 @@
+<div class="shell">
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">CL</div>
+      <div class="title">
+        <h1>Menu</h1>
+        <p class="muted">
+          {{ displayName }}
+          <span class="user-dot" title="connecté"></span>
+        </p>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn ghost" (click)="toggleTheme()" aria-label="Basculer le thème">
+        <span class="sun">☀️</span>
+        <span class="moon">🌙</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Quick stats (placeholders) -->
+  <section class="stats">
+    <div class="stat">
+      <div class="kpi">€ {{ monthTotal() ?? '—' }}</div>
+      <div class="kpi-sub">Total du mois</div>
+    </div>
+    <div class="stat">
+      <div class="kpi">{{ monthCount() ?? '—' }}</div>
+      <div class="kpi-sub">Opérations</div>
+    </div>
+    <div class="stat">
+      <div class="kpi">{{ nextEvent() ?? '—' }}</div>
+      <div class="kpi-sub">Prochain évènement</div>
+    </div>
+  </section>
+
+  <main class="grid">
+    <!-- Carte Dépenses -->
+    <a class="card" routerLink="/look">
+      <div class="card-bg tint-1"></div>
+      <div class="card-body">
+        <div class="card-icon">💶</div>
+        <h3>Dépenses</h3>
+        <p class="muted">Saisir une dépense, voir la courbe et la répartition par catégories.</p>
+        <div class="card-cta">
+          Ouvrir
+          <span class="arrow">→</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Carte Planning -->
+    <a class="card" routerLink="/plan">
+      <div class="card-bg tint-2"></div>
+      <div class="card-body">
+        <div class="card-icon">🗓️</div>
+        <h3>Planning</h3>
+        <p class="muted">Ajouter des évènements, consulter ton agenda personnel.</p>
+        <div class="card-cta">
+          Ouvrir
+          <span class="arrow">→</span>
+        </div>
+      </div>
+    </a>
+  </main>
+</div>

@@ -1,0 +1,8 @@
+:host{ display:block; color:#e7ebff }
+.wrap{ padding:30px clamp(16px,5vw,40px) 80px; }
+h1{ margin:0 0 .2rem; font-size: clamp(1.2rem, 2.4vw, 1.8rem); }
+.sub{ color:#b8c0ffcc; margin:0 0 1rem; }
+.card{
+  border:1px solid #2b2e4a; border-radius:20px;
+  padding:16px; background: linear-gradient(180deg, #0e1125d0, #0e1125a8);
+}
