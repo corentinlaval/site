@@ -1,1 +1,14 @@
-<p>look works!</p>
+<h2>Dépenses</h2>
+<p *ngIf="!uid">Vous devez être connecté pour voir/ajouter des dépenses.</p>
+
+<div *ngIf="uid">
+  <button (click)="addMock()">+ Ajouter 12€ courses (aujourd'hui)</button>
+
+  <ul>
+    <li *ngFor="let e of expenses$ | async">
+      {{ e.category || '—' }} – {{ e.amount }} €
+      – {{ e.date ? (e.date.toDate() | date:'short':'':'fr-FR') : '—' }}
+      <button (click)="del(e.id)">supprimer</button>
+    </li>
+  </ul>
+</div>

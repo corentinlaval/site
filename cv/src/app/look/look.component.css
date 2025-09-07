@@ -1,0 +1,6 @@
+h2 { margin: 1rem 0; font-weight: 600; }
+button { margin:.25rem 0; padding:.45rem .8rem; border:0; border-radius:8px; cursor:pointer; background:#2980b9; color:#fff; }
+button:hover { opacity:.9; }
+ul { list-style:none; padding:0; margin:.5rem 0; }
+li { display:flex; gap:.75rem; align-items:center; padding:.4rem 0; border-bottom:1px solid #eee; }
+li button { margin-left:auto; background:#e74c3c; }
