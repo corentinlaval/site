@@ -1,4 +1,7 @@
-<app-side title="Corentin Laval" [displayName]="'Utilisateur connecté'">
+<app-side
+  title="Corentin Laval"
+  [displayName]="(displayName$ | async) ?? 'Utilisateur connecté'"
+  (themeToggle)="onThemeToggle()">
 </app-side>
 
 <main class="page">

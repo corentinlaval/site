@@ -33,6 +33,9 @@ export interface EventItem {
 export class DataService {
   private db = inject(Firestore);
   private auth = inject(Auth);
+  displayName$: Observable<string | null> = authState(this.auth).pipe(
+    map(u => u?.displayName ?? u?.email ?? null)
+  );
 
   private expensesCol(): CollectionReference<Expense> {
     return collection(this.db, 'expenses') as CollectionReference<Expense>;

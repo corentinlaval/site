@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgIf } from '@angular/common';
-import {AppComponent} from '../app.component';
 
 @Component({
   selector: 'app-side',
