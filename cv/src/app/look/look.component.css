@@ -1,6 +1,162 @@
-h2 { margin: 1rem 0; font-weight: 600; }
-button { margin:.25rem 0; padding:.45rem .8rem; border:0; border-radius:8px; cursor:pointer; background:#2980b9; color:#fff; }
-button:hover { opacity:.9; }
-ul { list-style:none; padding:0; margin:.5rem 0; }
-li { display:flex; gap:.75rem; align-items:center; padding:.4rem 0; border-bottom:1px solid #eee; }
-li button { margin-left:auto; background:#e74c3c; }
+/* Layout global */
+.dashboard {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1.25rem;
+  font-family: Arial, sans-serif;
+  color: #2d2d2d;
+  line-height: 1.5;
+}
+
+/* Header */
+.head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+.head h2 { margin: 0 0 .25rem; }
+.head p { margin: 0; color: #555; }
+
+/* Segmented control */
+.toolbar {
+  display: flex;
+  gap: .75rem;
+}
+.segmented {
+  display: inline-flex;
+  border: 1px solid #ddd;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.segmented button {
+  padding: .4rem .9rem;
+  background: #f8f8f8;
+  border: none;
+  cursor: pointer;
+}
+.segmented button + button {
+  border-left: 1px solid #ddd;
+}
+.segmented button.active {
+  background: #2980b9;
+  color: #fff;
+}
+
+/* Cards & grid */
+.card {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,.04);
+}
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+.panel h3 { margin: 0 0 .75rem; }
+
+/* Form */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .75rem;
+}
+.col-span-2 { grid-column: 1 / -1; }
+label {
+  display: grid;
+  gap: .35rem;
+  font-size: .95rem;
+}
+input, select {
+  padding: .55rem .7rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+}
+input:focus, select:focus {
+  border-color: #2980b9;
+  box-shadow: 0 0 0 3px rgba(41,128,185,.12);
+}
+.actions {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+}
+button.primary {
+  padding: .55rem 1rem;
+  background: #2980b9;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+button.primary:disabled {
+  opacity: .6;
+  cursor: default;
+}
+
+/* Spinner minimal */
+.spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #fff;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+  vertical-align: -3px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.error { color: #c0392b; }
+
+/* Chart area */
+.chart-wrap {
+  position: relative;
+  width: 100%;
+  height: 280px;
+  border: 1px dashed #e5e5e5;
+  border-radius: 8px;
+  padding: .25rem;
+}
+
+/* Liste des mouvements */
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: .6rem .2rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+.item:last-child { border-bottom: none; }
+.meta { max-width: 70%; }
+.cat { font-weight: 600; }
+.sub { color: #666; font-size: .92rem; }
+.amount {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+button.link {
+  background: transparent;
+  border: none;
+  color: #2980b9;
+  cursor: pointer;
+}
+button.link.danger { color: #c0392b; }
+
+/* Responsive */
+@media (max-width: 780px) {
+  .grid-2 { grid-template-columns: 1fr; }
+  .meta { max-width: 100%; }
+}

@@ -1,14 +1,85 @@
-<h2>Dépenses</h2>
-<p *ngIf="!uid">Vous devez être connecté pour voir/ajouter des dépenses.</p>
+<div class="dashboard">
+  <header class="head">
+    <div>
+      <h2>Suivi dépenses — {{ monthLabel }}</h2>
+      <p>
+        <strong>{{ (monthTotal$ | async) | currency:'EUR':'symbol':'1.2-2':'fr-FR' }}</strong>
+        · {{ (monthCount$ | async) ?? 0 }} opération(s)
+      </p>
+    </div>
 
-<div *ngIf="uid">
-  <button (click)="addMock()">+ Ajouter 12€ courses (aujourd'hui)</button>
+    <div class="toolbar">
+      <div class="segmented">
+        <button [class.active]="view()==='curve'" (click)="changeView('curve')">Courbe</button>
+        <button [class.active]="view()==='categories'" (click)="changeView('categories')">Catégories</button>
+      </div>
+    </div>
+  </header>
 
-  <ul>
-    <li *ngFor="let e of expenses$ | async">
-      {{ e.category || '—' }} – {{ e.amount }} €
-      – {{ e.date ? (e.date.toDate() | date:'short':'':'fr-FR') : '—' }}
-      <button (click)="del(e.id)">supprimer</button>
-    </li>
-  </ul>
+  <section class="card grid-2">
+    <div class="panel">
+      <h3>Ajouter une dépense</h3>
+      <form [formGroup]="form" (ngSubmit)="addExpense()" class="grid">
+        <label>Montant (€)
+          <input type="number" step="0.01" formControlName="amount" placeholder="0,00" />
+        </label>
+
+        <label>Catégorie
+          <select formControlName="category">
+            <option *ngFor="let c of categories" [value]="c.key">{{ c.label }}</option>
+          </select>
+        </label>
+
+        <label>Date
+          <input type="date" formControlName="dateStr" />
+        </label>
+
+        <label class="col-span-2">Note
+          <input type="text" formControlName="note" placeholder="(optionnel)" />
+        </label>
+
+        <div class="actions col-span-2">
+          <button class="primary" type="submit" [disabled]="saving() || form.invalid">
+            <span *ngIf="!saving()">Ajouter</span>
+            <span *ngIf="saving()" class="spinner" aria-hidden="true"></span>
+          </button>
+          <span class="error" *ngIf="errorMsg()">{{ errorMsg() }}</span>
+        </div>
+      </form>
+    </div>
+
+    <div class="panel">
+      <h3>Vue graphique</h3>
+      <div class="chart-wrap">
+        <canvas #curveCanvas [hidden]="view() !== 'curve'"></canvas>
+        <canvas #barCanvas   [hidden]="view() !== 'categories'"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h3>Mouvements (mois courant)</h3>
+
+    <ng-container *ngIf="monthExpenses$ | async as rows">
+      <ul class="list">
+        <li class="item" *ngFor="let e of (rows || [])">
+          <div class="meta">
+            <div class="cat">{{ e.category }}</div>
+            <div class="sub">
+              {{ e.date.toDate() | date:'EEE d MMM, HH:mm':'':'fr-FR' }}
+              <span *ngIf="e.note">· {{ e.note }}</span>
+            </div>
+          </div>
+          <div class="amount">
+            <strong>{{ e.amount | currency:'EUR':'symbol':'1.2-2':'fr-FR' }}</strong>
+            <button class="link danger" (click)="delete(e.id)">supprimer</button>
+          </div>
+        </li>
+
+        <li class="empty" *ngIf="(rows || []).length === 0">
+          Aucune dépense à afficher.
+        </li>
+      </ul>
+    </ng-container>
+  </section>
 </div>
