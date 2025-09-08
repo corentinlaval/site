@@ -2,15 +2,19 @@
   <!-- Quick stats (placeholders) -->
   <section class="stats">
     <div class="stat">
-      <div class="kpi">€ {{ monthTotal() ?? '—' }}</div>
+      <div class="kpi">
+        {{ monthTotal() | currency:'EUR':'symbol':'1.2-2':'fr-FR' }}
+      </div>
       <div class="kpi-sub">Total du mois</div>
     </div>
+
     <div class="stat">
-      <div class="kpi">{{ monthCount() ?? '—' }}</div>
+      <div class="kpi">{{ monthCount() }}</div>
       <div class="kpi-sub">Opérations</div>
     </div>
+
     <div class="stat">
-      <div class="kpi">{{ nextEvent() ?? '—' }}</div>
+      <div class="kpi">{{ nextEvent() || '—' }}</div>
       <div class="kpi-sub">Prochain évènement</div>
     </div>
   </section>

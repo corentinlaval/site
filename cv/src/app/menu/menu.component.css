@@ -205,3 +205,54 @@
 
 /* ===== Helpers ===== */
 a{ text-decoration:none; }
+
+
+/* ===== Stats Section ===== */
+.stats {
+  margin: 24px 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  font-family: Arial, sans-serif;
+}
+
+@media (max-width: 800px) {
+  .stats {
+    grid-template-columns: 1fr;
+  }
+}
+
+.stat {
+  position: relative;
+  border-radius: 20px;
+  padding: 20px;
+  text-align: center;
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--surface) 85%, transparent),
+    color-mix(in oklab, var(--surface-2) 65%, transparent)
+  );
+  border: 1px solid var(--border);
+  box-shadow: 0 8px 24px #0000001f;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px #00000033;
+  border-color: color-mix(in oklab, var(--border) 50%, #8f73ff);
+}
+
+.kpi {
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.kpi-sub {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: 0.3px;
+}
