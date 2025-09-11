@@ -45,7 +45,8 @@
 
   <!-- Graph en grand + formulaire coulissant -->
   <section class="card grid-2" [class.form-open]="isFormOpen()">
-    <div class="panel">
+    <!-- GRAPHE -->
+    <div class="panel graph-panel">
       <h3>Vue graphique</h3>
       <div class="chart-wrap">
         <ng-container [ngSwitch]="view()">
@@ -55,6 +56,7 @@
       </div>
     </div>
 
+    <!-- FORMULAIRE -->
     <div class="panel form-panel" [class.hidden]="!isFormOpen()">
       <h3>Ajouter une dépense</h3>
       <form [formGroup]="form" (ngSubmit)="addExpense()" class="frm">

@@ -1,6 +1,6 @@
 /* Layout global */
 .dashboard {
-  max-width: 1100px;
+  max-width: 1280px;
   margin: 0 auto;
   padding: 18px;
   font-family: Arial, sans-serif;
@@ -26,7 +26,6 @@
   flex-wrap: wrap;
   justify-content: flex-end;
 }
-
 .segmented {
   display: inline-flex;
   border: 1px solid var(--border, #ddd);
@@ -41,15 +40,10 @@
   border: none;
   cursor: pointer;
 }
-.segmented button + button {
-  border-left: 1px solid var(--border, #ddd);
-}
-.segmented button.active {
-  background: #2980b9;
-  color: #fff;
-}
+.segmented button + button { border-left: 1px solid var(--border, #ddd); }
+.segmented button.active { background: #2980b9; color: #fff; }
 
-/* Boutons */
+/* Boutons génériques */
 button.primary {
   padding: .55rem 1rem;
   background: #2980b9;
@@ -65,7 +59,7 @@ button.primary.ghost {
 }
 button.primary:disabled { opacity: .6; cursor: default; }
 
-/* Cards & grid */
+/* Cartes */
 .card {
   background: #fff;
   border: 1px solid #eee;
@@ -74,55 +68,99 @@ button.primary:disabled { opacity: .6; cursor: default; }
   margin-bottom: 1rem;
   box-shadow: 0 2px 8px rgba(0,0,0,.04);
 }
+
+/* === Grille form + graphe ===
+   Fermé: 1 colonne (graphe centré).
+   Ouvert: graphe à gauche + form (210px) à droite. */
 .grid-2 {
   display: grid;
-  grid-template-columns: 1.2fr .8fr; /* graphe large par défaut */
+  grid-template-columns: 1fr;      /* fermé: 1 colonne */
   gap: 1rem;
   align-items: start;
+  transition: grid-template-columns .25s ease;
 }
+.grid-2 .graph-panel { justify-self: center; }
+
+/* form ouvert: graphe + panneau form fixe à 210px */
 .grid-2.form-open {
-  grid-template-columns: 1fr 1fr; /* si form ouverte, on équilibre */
+  grid-template-columns: minmax(0, 1fr) 210px;
 }
+.grid-2.form-open .graph-panel { justify-self: start; }
+
+.panel { min-width: 0; }
 .panel h3 { margin: 0 0 .75rem; }
 
-/* Graph area */
+/* Graph — largeur bornée, hauteur inchangée */
 .chart-wrap {
   position: relative;
-  width: 100%;
-  height: 380px; /* grand par défaut */
+  width: clamp(760px, 72vw, 980px);        /* large au centre */
+  height: clamp(340px, 48vh, 420px);       /* ne change pas */
   border: 1px dashed #e5e5e5;
   border-radius: 10px;
   padding: .25rem;
-}
-.form-open .chart-wrap {
-  height: 300px; /* un peu plus petit si formulaire ouvert */
+  overflow: hidden;
+  background: #fafafa;
+  transition: width .25s ease;
 }
 
-/* Form */
+/* quand form ouvert, on réduit un peu la largeur, mais on garde la hauteur */
+.grid-2.form-open .chart-wrap {
+  width: clamp(640px, 65vw, 860px);
+}
+
+/* Canvas Chart.js — 100% du conteneur */
+.chart-wrap canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* Form — panneau étroit 210px, champs empilés, décalé à droite */
+.form-panel {
+  margin-top: 45px;
+  width: 210px;
+  max-width: 210px;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-left: -32px;   /* force le décalage à droite */
+}
 .form-panel.hidden { display: none; }
 
-.frm { display: grid; gap: 12px; }
-.row2 {
-  display: grid;
-  grid-template-columns: 1.2fr .8fr .8fr;
+.frm {
+  display: flex;
+  flex-direction: column;
   gap: 12px;
 }
-.full { grid-column: 1 / -1; }
-label { display: grid; gap: 6px; font-size: .95rem; }
-input, select {
-  padding: 10px 12px;
-  border-radius: 10px;
+.frm label {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: .95rem;
+}
+.frm input,
+.frm select {
+  padding: 8px 10px;
+  border-radius: 8px;
   border: 1px solid #ddd;
   outline: none;
   background: #fafafa;
 }
-input:focus, select:focus {
+.frm input:focus,
+.frm select:focus {
   border-color: #2980b9;
-  box-shadow: 0 0 0 3px rgba(41,128,185,.12);
+  box-shadow: 0 0 0 2px rgba(41,128,185,.15);
 }
+
+/* Actions formulaire */
 .actions { display: flex; align-items: center; gap: .75rem; }
 
-/* Spinner minimal */
+/* Spinner */
 .spinner {
   display: inline-block;
   width: 18px;
@@ -137,12 +175,8 @@ input:focus, select:focus {
 
 .error { color: #c0392b; font-weight: 600; }
 
-/* Liste des mouvements */
-.list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
+/* Liste mouvements */
+.list { list-style: none; margin: 0; padding: 0; }
 .item {
   display: flex;
   justify-content: space-between;
@@ -154,11 +188,7 @@ input:focus, select:focus {
 .meta { max-width: 70%; }
 .cat { font-weight: 600; }
 .sub { color: #666; font-size: .92rem; }
-.amount {
-  display: flex;
-  align-items: center;
-  gap: .5rem;
-}
+.amount { display: flex; align-items: center; gap: .5rem; }
 button.link {
   background: transparent;
   border: none;
@@ -168,30 +198,26 @@ button.link {
 button.link.danger { color: #c0392b; }
 
 /* Responsive */
+@media (max-width: 1100px) {
+  .chart-wrap { width: clamp(640px, 80vw, 860px); }
+}
 @media (max-width: 900px) {
   .grid-2,
-  .grid-2.form-open {
-    grid-template-columns: 1fr;
-  }
+  .grid-2.form-open { grid-template-columns: 1fr; }
+
+  .grid-2 .graph-panel,
+  .grid-2.form-open .graph-panel { justify-self: center; }
+
   .chart-wrap {
+    width: 100%;
     height: 320px;
   }
+
+  .form-panel {
+    width: 100%;
+    max-width: none;
+    margin-left: 0;   /* pas besoin de décalage sur mobile */
+  }
+
   .meta { max-width: 100%; }
-}
-
-
-.chart-wrap {
-  position: relative;
-  width: 100%;
-  min-height: 280px;
-  max-height: 400px; /* limite haute */
-  height: 340px;     /* valeur par défaut */
-  border: 1px dashed #e5e5e5;
-  border-radius: 10px;
-  padding: .25rem;
-  overflow: hidden;  /* évite l’expansion infinie */
-}
-
-.form-open .chart-wrap {
-  height: 280px; /* un peu plus petit quand le formulaire est affiché */
 }
