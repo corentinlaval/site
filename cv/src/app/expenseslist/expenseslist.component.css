@@ -1,0 +1,65 @@
+/* Layout global */
+.dashboard {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1.25rem;
+  font-family: Arial, sans-serif;
+  color: var(--text, #2d2d2d);
+  line-height: 1.5;
+}
+
+/* Header */
+.head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+.head-left h2 { margin: 0 0 .25rem; font-weight: 800; }
+.muted { margin: 0; color: var(--muted, #555); }
+
+/* Card */
+.card {
+  background: var(--surface, #fff);
+  border: 1px solid var(--border, #eee);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,.04);
+}
+.card-head h3 { margin: 0 0 .75rem; }
+
+/* Liste des mouvements */
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: .6rem .2rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+.item:last-child { border-bottom: none; }
+
+.meta { max-width: 70%; }
+.cat { font-weight: 700; }
+.sub { color: var(--muted, #666); font-size: .92rem; }
+.amount {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.empty {
+  padding: .7rem 0;
+  color: var(--muted, #666);
+  text-align: center;
+  font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 780px) {
+  .meta { max-width: 100%; }
+}

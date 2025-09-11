@@ -3,6 +3,7 @@ import { CvpageComponent } from './cvpage/cvpage.component';
 import { AuthGuard } from './auth.guard';
 import { ShellComponent } from './shell/shell.component'; // 👈 le wrapper avec <app-side>
 
+
 export const routes: Routes = [
   // Page publique
   {
@@ -29,6 +30,10 @@ export const routes: Routes = [
       {
         path: 'look',
         loadComponent: () => import('./look/look.component').then(m => m.LookComponent)
+      },
+      {
+        path: 'movments',
+        loadComponent: () => import('./expenseslist/expenseslist.component').then(m => m.ExpenseslistComponent)
       },
       {
         path: 'plan',

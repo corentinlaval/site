@@ -1,0 +1,38 @@
+<section class="dashboard">
+  <header class="head">
+    <div class="head-left">
+      <h2>Mouvements — {{ monthLabel }}</h2>
+      <p class="muted">
+        Liste en lecture seule des opérations du mois courant.
+      </p>
+    </div>
+  </header>
+
+  <section class="card">
+    <div class="card-head">
+      <h3>Mouvements (mois courant)</h3>
+    </div>
+
+    <ng-container *ngIf="monthExpenses$ | async as rows">
+      <ul class="list">
+        <li class="item" *ngFor="let e of (rows || []); trackBy: trackById">
+          <div class="meta">
+            <div class="cat">{{ e.category }}</div>
+            <div class="sub">
+              {{ e.date.toDate() | date:'EEE d MMM, HH:mm':'':'fr-FR' }}
+              <span *ngIf="e.note">· {{ e.note }}</span>
+            </div>
+          </div>
+
+          <div class="amount">
+            <strong>{{ e.amount | currency:'EUR':'symbol':'1.2-2':'fr-FR' }}</strong>
+          </div>
+        </li>
+
+        <li class="empty" *ngIf="(rows || []).length === 0">
+          Aucune dépense à afficher.
+        </li>
+      </ul>
+    </ng-container>
+  </section>
+</section>

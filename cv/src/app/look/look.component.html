@@ -12,26 +12,50 @@
     </div>
 
     <div class="toolbar">
+      <!-- Toggle quotient/cumulé -->
+      <div class="segmented small" role="tablist" aria-label="Mode courbe">
+        <button role="tab"
+                [attr.aria-selected]="curveMode()==='daily'"
+                [class.active]="curveMode()==='daily'"
+                (click)="curveMode.set('daily')">Quotidien</button>
+        <button role="tab"
+                [attr.aria-selected]="curveMode()==='cum'"
+                [class.active]="curveMode()==='cum'"
+                (click)="curveMode.set('cum')">Cumulé</button>
+      </div>
+
+      <!-- Onglets vues -->
       <div class="segmented" role="tablist" aria-label="Changer de vue">
         <button role="tab"
                 [attr.aria-selected]="view()==='curve'"
                 [class.active]="view()==='curve'"
-                (click)="changeView('curve')">
-          Courbe
-        </button>
+                (click)="changeView('curve')">Courbe</button>
         <button role="tab"
                 [attr.aria-selected]="view()==='categories'"
                 [class.active]="view()==='categories'"
-                (click)="changeView('categories')">
-          Catégories
-        </button>
+                (click)="changeView('categories')">Catégories</button>
       </div>
+
+      <!-- Bouton form -->
+      <button class="primary ghost" (click)="toggleForm()">
+        {{ isFormOpen() ? 'Fermer' : 'Ajouter une dépense' }}
+      </button>
     </div>
   </header>
 
-  <!-- Form + Graph -->
-  <section class="card grid-2">
+  <!-- Graph en grand + formulaire coulissant -->
+  <section class="card grid-2" [class.form-open]="isFormOpen()">
     <div class="panel">
+      <h3>Vue graphique</h3>
+      <div class="chart-wrap">
+        <ng-container [ngSwitch]="view()">
+          <canvas *ngSwitchCase="'curve'" #curveCanvas></canvas>
+          <canvas *ngSwitchCase="'categories'" #barCanvas></canvas>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="panel form-panel" [class.hidden]="!isFormOpen()">
       <h3>Ajouter une dépense</h3>
       <form [formGroup]="form" (ngSubmit)="addExpense()" class="frm">
         <div class="row2">
@@ -67,19 +91,9 @@
         </div>
       </form>
     </div>
-
-    <div class="panel">
-      <h3>Vue graphique</h3>
-      <div class="chart-wrap">
-        <ng-container [ngSwitch]="view()">
-          <canvas *ngSwitchCase="'curve'" #curveCanvas></canvas>
-          <canvas *ngSwitchCase="'categories'" #barCanvas></canvas>
-        </ng-container>
-      </div>
-    </div>
   </section>
 
-  <!-- List -->
+  <!-- Liste -->
   <section class="card">
     <div class="card-head">
       <h3>Mouvements (mois courant)</h3>
