@@ -81,20 +81,29 @@ export class LookComponent implements OnInit, OnDestroy {
   private curveChart?: Chart;
   private barChart?: Chart;
 
-  // setters ViewChild pour (re)rendre à chaque apparition du canvas
+  // Setters ViewChild: à chaque (ré)apparition d’un canvas, on détruit l’ancienne instance et on recrée
   @ViewChild('curveCanvas')
   set curveCanvasRef(v: ElementRef<HTMLCanvasElement> | undefined) {
-    this.curveCanvasEl = v?.nativeElement;
-    if (this.view() === 'curve' && this.curveCanvasEl) {
+    this.curveCanvasEl = v?.nativeElement ?? undefined;
+    if (!this.curveCanvasEl) return;
+
+    // On repart propre
+    this.curveChart?.destroy();
+    if (this.view() === 'curve') {
       this.renderCurve();
+      this.queueResizeFor('curve');
     }
   }
 
   @ViewChild('barCanvas')
   set barCanvasRef(v: ElementRef<HTMLCanvasElement> | undefined) {
-    this.barCanvasEl = v?.nativeElement;
-    if (this.view() === 'categories' && this.barCanvasEl) {
+    this.barCanvasEl = v?.nativeElement ?? undefined;
+    if (!this.barCanvasEl) return;
+
+    this.barChart?.destroy();
+    if (this.view() === 'categories') {
       this.renderBars();
+      this.queueResizeFor('categories');
     }
   }
 
@@ -105,15 +114,14 @@ export class LookComponent implements OnInit, OnDestroy {
     // snapshot local pour alimenter les graphes
     this.sub = this.monthExpenses$.subscribe(rows => {
       this.monthRowsSnapshot = rows ?? [];
-      // Mettre à jour les graphs existants
-      if (this.view() === 'curve') this.updateCurveDataset();
+      if (this.view() === 'curve') this.applyCurveModeToChart();
       if (this.view() === 'categories') this.updateBarDataset();
     });
 
-    // si on change daily<->cum, mettre à jour le dataset de la courbe
+    // si on change daily <-> cum, mettre à jour la courbe
     effect(() => {
       const _mode = this.curveMode();
-      if (this.view() === 'curve') this.updateCurveDataset();
+      if (this.view() === 'curve') this.applyCurveModeToChart();
     });
   }
 
@@ -124,27 +132,50 @@ export class LookComponent implements OnInit, OnDestroy {
   }
 
   // ===== Actions UI =====
-  changeView(v: ViewMode) {
-    if (this.view() === v) return;
-    this.view.set(v);
-    // (re)crée le graphe de la vue cible
-    if (v === 'curve') {
-      this.renderCurve();
-      requestAnimationFrame(() => this.curveChart?.resize());
-    } else {
-      this.renderBars();
-      requestAnimationFrame(() => this.barChart?.resize());
+  changeView(v?: 'curve' | 'categories') {
+    const next: 'curve' | 'categories' = v ?? (this.view() === 'curve' ? 'categories' : 'curve');
+    if (this.view() === next) {
+      this.queueResizeFor(next);
+      return;
     }
+
+    // On détruit le chart de la vue quittée pour éviter les fuites et forcer un rerender propre
+    if (next === 'curve') {
+      this.barChart?.destroy();
+      this.barChart = undefined;
+    } else {
+      this.curveChart?.destroy();
+      this.curveChart = undefined;
+    }
+
+    // On laisse ngSwitch recréer le bon <canvas>, les setters ViewChild feront le rendu
+    this.view.set(next);
+    this.queueResizeFor(next);
   }
 
-  toggleCurveMode() {
-    this.curveMode.update(m => (m === 'daily' ? 'cum' : 'daily'));
+  // Resize fiable après reflow/transition
+  private queueResizeFor(which: 'curve' | 'categories') {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        if (which === 'curve') this.curveChart?.resize();
+        else this.barChart?.resize();
+      });
+    });
+  }
+
+  // Boutons Quotidien / Cumulé
+  setCurveMode(mode: 'daily' | 'cum') {
+    if (this.curveMode() === mode) return;
+    this.curveMode.set(mode);
+    // on force l’onglet Courbe si besoin
+    if (this.view() !== 'curve') this.view.set('curve');
+    this.applyCurveModeToChart();
+    this.queueResizeFor('curve');
   }
 
   toggleForm() {
     this.isFormOpen.update(v => !v);
-    // redimensionner le chart après reflow
-    requestAnimationFrame(() => this.curveChart?.resize());
+    this.queueResizeFor('curve');
   }
 
   // ===== CRUD =====
@@ -190,7 +221,7 @@ export class LookComponent implements OnInit, OnDestroy {
     return `${y}-${m}-${dd}`;
   }
 
-  // ===== Séries pour graphs =====
+  // ===== Séries =====
   private buildMonthSeriesBoth(rows: Array<Expense & { id: string }>) {
     const start = new Date(this.monthStart);
     const end = new Date(this.nextMonthStart);
@@ -260,22 +291,28 @@ export class LookComponent implements OnInit, OnDestroy {
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        animation: { duration: 300 },
-        scales: { x: { grid: { display: false } }, y: { beginAtZero: true } },
+        animation: { duration: 250 },
         plugins: { legend: { display: false } },
+        scales: {
+          x: { grid: { display: false }, ticks: { autoSkip: true, maxTicksLimit: 10 } },
+          y: { beginAtZero: true },
+        },
       },
     });
   }
 
-  private updateCurveDataset() {
-    if (!this.curveChart) return;
+  private applyCurveModeToChart() {
+    if (!this.curveChart) {
+      this.renderCurve();
+      return;
+    }
     const { labels, daily, cum } = this.buildMonthSeriesBoth(this.monthRowsSnapshot);
     const mode = this.curveMode();
     this.curveChart.data.labels = labels;
     this.curveChart.data.datasets[0].data = (mode === 'daily' ? daily : cum) as any;
     this.curveChart.data.datasets[0].label = mode === 'daily' ? 'Quotidien (mois)' : 'Cumul (mois)';
     (this.curveChart.data.datasets[0] as any).stepped = mode === 'cum' ? 'middle' : false;
-    this.curveChart.update();
+    this.curveChart.update('none');
   }
 
   private renderBars() {
@@ -287,14 +324,22 @@ export class LookComponent implements OnInit, OnDestroy {
       type: 'bar',
       data: {
         labels,
-        datasets: [{ label: 'Par catégories (mois)', data: sums, borderRadius: 8, barPercentage: 0.8, categoryPercentage: 0.7 }],
+        datasets: [
+          {
+            label: 'Par catégories (mois)',
+            data: sums,
+            borderRadius: 8,
+            barPercentage: 0.8,
+            categoryPercentage: 0.7,
+          },
+        ],
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        animation: { duration: 300 },
-        scales: { x: { grid: { display: false } }, y: { beginAtZero: true } },
+        animation: { duration: 250 },
         plugins: { legend: { display: false } },
+        scales: { x: { grid: { display: false } }, y: { beginAtZero: true } },
       },
     });
   }
@@ -304,6 +349,6 @@ export class LookComponent implements OnInit, OnDestroy {
     const { labels, sums } = this.buildCategorySeries(this.monthRowsSnapshot);
     this.barChart.data.labels = labels;
     this.barChart.data.datasets[0].data = sums as any;
-    this.barChart.update();
+    this.barChart.update('none');
   }
 }

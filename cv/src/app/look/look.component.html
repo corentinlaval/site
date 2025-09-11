@@ -17,11 +17,11 @@
         <button role="tab"
                 [attr.aria-selected]="curveMode()==='daily'"
                 [class.active]="curveMode()==='daily'"
-                (click)="curveMode.set('daily')">Quotidien</button>
+                (click)="setCurveMode('daily')">Quotidien</button>
         <button role="tab"
                 [attr.aria-selected]="curveMode()==='cum'"
                 [class.active]="curveMode()==='cum'"
-                (click)="curveMode.set('cum')">Cumulé</button>
+                (click)="setCurveMode('cum')">Cumulé</button>
       </div>
 
       <!-- Onglets vues -->
