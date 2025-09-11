@@ -33,24 +33,29 @@
   overflow: hidden;
   background: #f8f8f8;
 }
-.segmented.small button { padding: .35rem .75rem; font-size: .9rem; }
+
+.segmented.small button { width: 90px; padding: .35rem .75rem; font-size: .9rem; }
 .segmented button {
-  padding: .45rem .95rem;
   background: transparent;
   border: none;
   cursor: pointer;
+  width: 90px;
+  height: 30px;
+  font-size: .9rem;
 }
 .segmented button + button { border-left: 1px solid var(--border, #ddd); }
 .segmented button.active { background: #2980b9; color: #fff; }
 
 /* Boutons génériques */
 button.primary {
+  width:190px;
   padding: .55rem 1rem;
   background: #2980b9;
   color: #fff;
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  font-size: .9rem;
 }
 button.primary.ghost {
   background: transparent;
