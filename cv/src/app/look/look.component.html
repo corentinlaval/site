@@ -107,7 +107,7 @@
           <div class="meta">
             <div class="cat">{{ e.category }}</div>
             <div class="sub">
-              {{ e.date.toDate() | date:'EEE d MMM, HH:mm':'':'fr-FR' }}
+              {{ e.date.toDate() | date:'EEE d MMM':'':'fr-FR' }}
               <span *ngIf="e.note">· {{ e.note }}</span>
             </div>
           </div>
