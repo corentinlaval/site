@@ -1,0 +1,146 @@
+/* ===== Font & base ===== */
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: #2d2d2d;
+  background: #f9f9f9;
+}
+
+/* Layout global */
+.dashboard {
+  max-width: 780px;   /* colonne centrale pas trop large */
+  margin: 0 auto;
+  padding: 18px;
+  font-family: Arial, sans-serif;
+  color: #2d2d2d;
+}
+
+/* Head */
+.head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 1.25rem;
+}
+.head h2 { margin: 0 0 .25rem; font-weight: 600; }
+.muted { color: #555; margin: 0; font-size: .9rem; }
+
+/* Toolbar segmented */
+.toolbar { display: flex; gap: .75rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.segmented {
+  display: inline-flex;
+  border: 1px solid #ddd;
+  border-radius: 999px;
+  overflow: hidden;
+  background: #f8f8f8;
+}
+.segmented.small button { padding: .35rem .75rem; font-size: .9rem; }
+.segmented button {
+  padding: .45rem .95rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.segmented button + button { border-left: 1px solid #ddd; }
+.segmented button.active { background: #2980b9; color: #fff; }
+
+.search-input {
+  margin-left: 12px; /* ou la valeur que tu veux */
+}
+/* Card */
+.card {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,.04);
+}
+.card h3 { margin: 0 0 .75rem; font-weight: 600; }
+
+/* Graph */
+.chart-wrap {
+  position: relative;
+  width: 100%;
+  height: clamp(320px, 48vh, 420px);
+  border: 1px dashed #e5e5e5;
+  border-radius: 10px;
+  padding: .25rem;
+  overflow: hidden;
+  background: #fafafa;
+  margin-bottom: 1rem;
+}
+.chart-wrap canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Recherche & listes */
+.partner { display: grid; gap: 10px; margin-bottom: 16px; }
+.partner label { display: grid; gap: 6px; font-size: .95rem; }
+.partner input {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background: #fafafa;
+  font-size: .95rem;
+}
+
+.list { list-style: none; margin: 0; padding: 0; }
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: .6rem 0;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: .95rem;
+}
+.row:last-child { border-bottom: none; }
+.who .name { font-weight: 600; }
+.who .sub { color: #666; font-size: .88rem; }
+.empty { color: #777; padding: .5rem 0; font-style: italic; }
+
+/* Actions & boutons */
+.actions { display: flex; gap: .5rem; align-items: center; }
+
+button {
+  font-size: .95rem;
+}
+button.primary {
+  padding: .45rem .8rem;
+  border-radius: 8px;
+  border: 0;
+  cursor: pointer;
+  background: #2980b9;
+  color: #fff;
+}
+button.primary.ghost {
+  background: transparent;
+  color: #2980b9;
+  border: 1px solid #2980b9;
+}
+button.link {
+  background: transparent;
+  border: none;
+  color: #2980b9;
+  cursor: pointer;
+}
+button.link.danger { color: #c0392b; }
+
+.list .item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;          /* ↑ au lieu de .6rem */
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.list .item:not(:last-child) {
+  margin-bottom: 0.5rem;   /* espace supplémentaire entre les lignes */
+}

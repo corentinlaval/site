@@ -69,8 +69,8 @@ export class LookComponent implements OnInit, OnDestroy {
   categories = [
     { key: 'logement', label: 'Logement' },
     { key: 'courses', label: 'Courses' },
-    { key: 'transport', label: 'Transport' },
     { key: 'loisirs', label: 'Loisirs' },
+    { key: 'transport', label: 'Transport' },
     { key: 'sante', label: 'Santé' },
     { key: 'autre', label: 'Autre' },
   ];

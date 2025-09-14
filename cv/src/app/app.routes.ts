@@ -36,6 +36,10 @@ export const routes: Routes = [
         loadComponent: () => import('./expenseslist/expenseslist.component').then(m => m.ExpenseslistComponent)
       },
       {
+        path: 'compare',
+        loadComponent: () => import('./comparatif/comparatif.component').then(m => m.ComparatifComponent)
+      },
+      {
         path: 'plan',
         loadComponent: () => import('./plan/plan.component').then(m => m.PlanComponent)
       },

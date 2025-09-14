@@ -1,0 +1,67 @@
+<div class="head">
+  <div>
+    <h2>Comparatif dépenses — {{ monthLabel }}</h2>
+  </div>
+
+  <div class="toolbar">
+    <div class="segmented small" role="tablist" aria-label="Mode courbe">
+      <button role="tab"
+              [attr.aria-selected]="curveMode()==='daily'"
+              [class.active]="curveMode()==='daily'"
+              (click)="setMode('daily')">Quotidien</button>
+      <button role="tab"
+              [attr.aria-selected]="curveMode()==='cum'"
+              [class.active]="curveMode()==='cum'"
+              (click)="setMode('cum')">Cumulé</button>
+    </div>
+  </div>
+</div>
+
+<div class="grid-2 form-open">
+  <div class="graph-panel card panel">
+    <div class="chart-wrap">
+      <canvas #curveCanvas></canvas>
+    </div>
+  </div>
+
+  <aside class="form-panel card panel">
+    <h3>Comparer avec…</h3>
+
+    <label class="full">
+      <span>Rechercher par nom</span>
+      <input class="search-input" type="text" [formControl]="search" placeholder="ex: corentinlaval1">
+    </label>
+
+    <ul class="list" *ngIf="(results$ | async) as results">
+      <li class="item" *ngFor="let u of results">
+        <div class="meta">
+          <div class="cat">{{ u.displayName }}</div>
+          <div class="sub">{{ u.email }}</div>
+        </div>
+        <div class="amount">
+          <button class="primary ghost" (click)="addPartner(u)">Mémoriser</button>
+          <button class="primary" (click)="pickPartner(u.uid)">Comparer</button>
+        </div>
+      </li>
+      <li class="item" *ngIf="results.length === 0">
+        <div class="sub">Aucun résultat.</div>
+      </li>
+    </ul>
+
+    <h4 style="margin-top:1rem;">Partenaires mémorisés</h4>
+    <ul class="list" *ngIf="(partners$ | async) as partners">
+      <li class="item" *ngFor="let p of partners">
+        <div class="meta">
+          <div class="cat">{{ p.displayName }}</div>
+        </div>
+        <div class="amount">
+          <button class="primary" (click)="pickPartner(p.uid)">Comparer</button>
+          <button class="link danger" (click)="removePartner(p.uid)">Supprimer</button>
+        </div>
+      </li>
+      <li class="item" *ngIf="partners.length === 0">
+        <div class="sub">Aucun partenaire mémorisé.</div>
+      </li>
+    </ul>
+  </aside>
+</div>
