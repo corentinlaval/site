@@ -3,7 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import {
   Firestore, collection, addDoc, doc, deleteDoc, updateDoc, setDoc, getDocs,
   query, where, orderBy, startAt, endAt, limit,
-  CollectionReference, collectionData, Timestamp, serverTimestamp
+  CollectionReference, collectionData, Timestamp, serverTimestamp, writeBatch
 } from '@angular/fire/firestore';
 import { Auth, User, authState } from '@angular/fire/auth';
 import {
@@ -124,6 +124,46 @@ export class DataService {
     const payload: any = { ...patch };
     if (patch.date) payload.date = Timestamp.fromDate(patch.date);
     return updateDoc(doc(this.db, 'expenses', id), payload);
+  }
+
+  /**
+   * Supprime toutes MES dépenses strictement antérieures au début du mois précédent.
+   * => on garde : mois courant + mois précédent
+   * Retourne le nombre de docs supprimés.
+   *
+   * Si Firestore demande un index composite, crée-le (uid ==, date <, orderBy date).
+   */
+  async cleanupOldExpenses(): Promise<number> {
+    const uid = await this.uidAwait();
+
+    const now = new Date();
+    const prevMonthStart = new Date(now.getFullYear(), now.getMonth() - 1, 1, 0, 0, 0, 0);
+
+    const qy = query(
+      this.expensesCol(),
+      where('uid', '==', uid),
+      where('date', '<', Timestamp.fromDate(prevMonthStart)),
+      orderBy('date', 'asc')
+    );
+
+    const snap = await getDocs(qy);
+    if (snap.empty) return 0;
+
+    // Batch sous la limite de 500 opérations
+    const MAX_BATCH = 400;
+    let count = 0;
+    let batch = writeBatch(this.db);
+
+    for (const d of snap.docs) {
+      batch.delete(doc(this.db, 'expenses', d.id));
+      count++;
+      if (count % MAX_BATCH === 0) {
+        await batch.commit();
+        batch = writeBatch(this.db);
+      }
+    }
+    await batch.commit();
+    return count;
   }
 
   // ========================================================

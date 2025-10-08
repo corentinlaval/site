@@ -4,6 +4,7 @@
   display: block;
 }
 
+/* Base */
 .cv {
   max-width: 800px;
   margin: 0 auto;
@@ -18,17 +19,19 @@
   color: #2980b9;
   text-decoration: none;
 }
+
 .cv a:hover {
   text-decoration: underline;
 }
 
+/* En-tête */
 .cv-header {
   text-align: center;
   margin-bottom: 3rem;
   position: relative;
 }
 
-/* Photo container */
+/* Photo */
 .photo-container {
   position: relative;
   display: block;
@@ -45,13 +48,14 @@
   margin: 0 auto 1rem;
 }
 
+/* Bouton vCard */
 .download-btn {
   position: absolute;
   bottom: -20px;
   left: 50%;
   transform: translateX(-50%);
   padding: 0.5em 2em;
-  background: rgba(128, 128, 128, 0.8);
+  background: rgba(41, 128, 185, 0.95);
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -70,20 +74,22 @@
   transform: translateX(-50%);
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
-  border-bottom: 6px solid rgba(128, 128, 128, 0.8);
+  border-bottom: 6px solid rgba(41, 128, 185, 0.95);
 }
 
-.photo-container:hover .download-btn {
+.photo-container:hover .download-btn,
+.download-btn:focus-visible {
   opacity: 1;
 }
 
-/* Section styling: minimal with accent border */
+/* ===== Sections ===== */
 .cv-section {
   margin-bottom: 2rem;
   padding-left: 1rem;
   border-left: 4px solid #2980b9;
 }
 
+/* Titres des sections à droite */
 .cv-section h2 {
   font-size: 1.75rem;
   color: #2980b9;
@@ -91,43 +97,59 @@
   text-align: right;
 }
 
-/* Align school parcours text to the right */
-#education .cv-item,
-#education .cv-item h3,
-#education .cv-item time,
-#education .cv-item p {
-  text-align: right;
-}
-
-/* Justify About section text */
-#about p {
-  text-align: justify;
-}
-
-/* Justify About section text */
-#about p {
-  text-align: justify;
-}
-
-/* Align specific section titles to the right */
-#education h2,
-#internships h2,
-#student-jobs h2 {
+/* Contenu des sections à gauche */
+.cv-section p,
+.cv-item,
+.cv-item h3,
+.cv-item time {
   text-align: left;
 }
 
-/* Responsive adjustments */
+/* Paragraphes justifiés */
+.cv-section p {
+  text-align: justify;
+}
+
+/* Élément d’article */
+.cv-item {
+  margin-bottom: 1.5rem;
+}
+
+.cv-item h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.25rem;
+}
+
+.cv-item time {
+  display: block;
+  font-style: italic;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+/* Responsive */
 @media (max-width: 600px) {
   .cv {
     padding: 1rem;
   }
+
   .cv-name {
     font-size: 2rem;
   }
+
   .cv-title {
     font-size: 1rem;
   }
+
   .cv-section h2 {
     font-size: 1.25rem;
+    text-align: left;
+  }
+}
+
+/* Accessibilité */
+@media (prefers-reduced-motion: reduce) {
+  .download-btn {
+    transition: none;
   }
 }

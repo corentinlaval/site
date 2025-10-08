@@ -19,7 +19,7 @@ export class CvpageComponent {
       'VERSION:2.1',
       'N:Laval;Corentin;;;',
       'FN:Corentin Laval',
-      'TITLE;CHARSET=ISO-8859-1;ENCODING=QUOTED-PRINTABLE:Ing=E9nieur T=E9l=E9com - Futur Doctorant',
+      'TITLE;CHARSET=ISO-8859-1;ENCODING=QUOTED-PRINTABLE:Ing=E9nieur T=E9l=E9com',
       'TEL;CELL:+33-6-24-19-44-59',
       'EMAIL;PREF:corentin@lavalcorentin.com',
       'END:VCARD'
