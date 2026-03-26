@@ -1,0 +1,24 @@
+<div class="container">
+
+  <div class="search-bar">
+    <input placeholder="Rechercher une annonce">
+    <button>Rechercher</button>
+  </div>
+
+  <div class="list">
+    <div class="card" *ngFor="let article of articles">
+      <img [src]="article.imageUrl" [alt]="article.title" class="photo">
+
+      <div class="content">
+        <h3>{{ article.title }}</h3>
+
+        <div class="middle-row">
+          <p class="location">{{ article.location }}</p>
+          <p class="price">{{ article.price }} €</p>
+        </div>
+
+        <p class="status">{{ article.status }}</p>
+      </div>
+    </div>
+
+</div>

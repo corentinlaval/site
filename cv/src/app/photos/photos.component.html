@@ -1,0 +1,49 @@
+<header class="event-header">
+  <h1>{{ eventTitle }}</h1>
+  <p>{{ eventDate }}</p>
+</header>
+
+<main class="gallery">
+  <img
+    *ngFor="let image of images; let i = index"
+    [src]="image"
+    alt="Photo de l'événement"
+    class="gallery-image"
+    (click)="openImage(i)"
+  >
+</main>
+
+<div class="modal" *ngIf="selectedImage" (click)="closeImage()">
+
+  <button class="close-btn" (click)="closeImage(); $event.stopPropagation()">
+    ✕
+  </button>
+
+  <img
+    [src]="selectedImage"
+    alt="Image agrandie"
+    class="modal-image"
+    (click)="$event.stopPropagation()"
+  >
+
+  <div class="modal-toolbar" (click)="$event.stopPropagation()">
+
+    <button type="button" class="toolbar-btn" (click)="showPrevious()">
+      ← Précédente
+    </button>
+
+    <button
+      type="button"
+      class="toolbar-btn download-btn"
+      (click)="downloadImage()"
+    >
+      Télécharger
+    </button>
+
+    <button type="button" class="toolbar-btn" (click)="showNext()">
+      Suivante →
+    </button>
+
+  </div>
+
+</div>

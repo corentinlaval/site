@@ -1,0 +1,17 @@
+<link href="https://fonts.googleapis.com/css2?family=Birthstone&display=swap" rel="stylesheet">
+<div class="memo-page">
+  <div class="play">
+    <div
+      class="carte"
+      *ngFor="let carte of cartes"
+      [class.flipped]="carte.flipped"
+      [class.found]="carte.found"
+      (click)="onCardClick(carte)">
+
+    <span class="contenu">
+      {{ carte.flipped ? carte.id : '' }}
+    </span>
+
+    </div>
+  </div>
+</div>

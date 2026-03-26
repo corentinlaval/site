@@ -1,7 +1,10 @@
 import { Routes } from '@angular/router';
 import { CvpageComponent } from './cvpage/cvpage.component';
 import { AuthGuard } from './auth.guard';
-import { ShellComponent } from './shell/shell.component'; // 👈 le wrapper avec <app-side>
+import { ShellComponent } from './shell/shell.component';
+import {PhotosComponent} from './photos/photos.component';
+import {TestComponent} from './test/test.component';
+import {MemoComponent} from './memo/memo.component'; // 👈 le wrapper avec <app-side>
 
 
 export const routes: Routes = [
@@ -9,6 +12,21 @@ export const routes: Routes = [
   {
     path: 'CorentinLaval',
     component: CvpageComponent
+  },
+
+  {
+    path: 'Photos',
+    component: PhotosComponent
+  },
+
+  {
+    path: 'Test',
+    component: TestComponent
+  },
+
+  {
+    path: 'MEMO',
+    component: MemoComponent
   },
 
   // Auth
