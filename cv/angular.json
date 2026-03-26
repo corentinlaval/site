@@ -32,6 +32,11 @@
                 "output": "/"
               },
               {
+                "glob": "googlefb8fad2891a1eaea.html",
+                "input": "src",
+                "output": "/"
+              },
+              {
                 "glob": "**/*",
                 "input": "public",
                 "output": "/"
